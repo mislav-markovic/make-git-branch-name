@@ -1,4 +1,3 @@
-
 pub enum IssueType {
     Feature,
     Defect,
@@ -124,6 +123,46 @@ mod tests {
         let expected = "A_B_C_D_E_F".to_string();
 
         let actual = make_normalized_heading(input.as_str());
+        assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn combine_parts_without_release_string_works() {
+        let release = "";
+        let r#type = "feature";
+        let issue = "JIRA-1234_Some_issue_heading";
+
+        let expected = format!("{type}/{issue}");
+        let actual = combine_parts(release, r#type, issue);
+
+        assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn combine_parts_with_release_string_works() {
+        let release = "R6/R6.4";
+        let r#type = "feature";
+        let issue = "JIRA-1234_Some_issue_heading";
+
+        let expected = format!("{release}/{type}/{issue}");
+        let actual = combine_parts(release, r#type, issue);
+
+        assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn combine_parts_works_with_redundant_slashes() {
+        let release = "R6/R6.4";
+        let r#type = "feature";
+        let issue = "JIRA-1234_Some_issue_heading";
+
+        let expected = format!("{release}/{type}/{issue}");
+
+        let release = format!("/{release}/");
+        let r#type = format!("{type}///");
+        let issue = format!("//{issue}//");
+        let actual = combine_parts(&release, &r#type, &issue);
+
         assert_eq!(expected, actual);
     }
 }
