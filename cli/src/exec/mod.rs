@@ -1,11 +1,11 @@
-pub(crate) mod commands;
+mod commands;
 
-use crate::config::commands::Commands;
+use crate::args::commands::Commands;
 
-pub fn dispatch_exec(cmd: &Commands) {
+pub fn dispatch_command(cmd: &Commands) {
     match cmd {
-        Commands::Make(make_args) => println!("{:?}", make_args),
-        Commands::Norm(norm_args) => println!("{:?}", norm_args),
-        Commands::Find(find_args) => println!("{:?}", find_args),
+        Commands::Make(make_args) => commands::make::exec(&make_args),
+        Commands::Norm(norm_args) => commands::norm::exec(&norm_args),
+        Commands::Find(find_args) => commands::find::exec(&find_args),
     };
 }

@@ -1,8 +1,8 @@
 use clap::Subcommand;
 
-mod find;
-mod make;
-mod norm;
+pub(crate) mod find;
+pub(crate) mod make;
+pub(crate) mod norm;
 
 #[derive(Debug, Subcommand)]
 pub(crate) enum Commands {
