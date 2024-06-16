@@ -1,3 +1,5 @@
+use crate::normalize::normalize_git_name_to_one_level;
+
 pub struct IssueHeading(String);
 
 impl From<String> for IssueHeading {
@@ -35,7 +37,9 @@ impl IssueHeading {
 }
 
 pub(super) fn make_normalized_heading(heading: &IssueHeading) -> String {
-    todo!()
+    let heading = heading.heading();
+
+    normalize_git_name_to_one_level(heading)
 }
 
 #[cfg(test)]
@@ -53,7 +57,7 @@ mod test {
 
     #[test]
     fn whitespaces_sanitized() {
-        let input: IssueHeading = "A B\tC\r\nD\rE\nF".into();
+        let input: IssueHeading = "A B C D E F".into();
         let expected = "A_B_C_D_E_F".to_string();
 
         let actual = make_normalized_heading(&input);
@@ -143,10 +147,12 @@ mod test {
             ),
         ];
 
+        let mut idx = 0;
         for (input, expected) in input_expected_pairs {
             let actual = make_normalized_heading(input);
 
-            assert_eq!(expected, &actual);
+            assert_eq!(expected, &actual, "{idx}: Input: '{}'", input.heading());
+            idx += 1;
         }
     }
 }

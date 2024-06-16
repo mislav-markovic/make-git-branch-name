@@ -1,4 +1,4 @@
-use crate::GIT_JOIN_SEP;
+use crate::{normalize::normalize_git_name_multi_level, GIT_JOIN_SEP_CHAR};
 
 pub struct ReleaseVersion(String);
 
@@ -30,15 +30,33 @@ pub(super) fn make_version_prefix(version: &ReleaseVersion) -> String {
 
     let version = version.version();
 
-    if version.contains(DELIMITER) {
-        let parts = version.split(DELIMITER);
-        parts
+    let rv = if version.contains(DELIMITER) {
+        let parts = version
+            .split(DELIMITER)
             .map(|p| p.trim())
-            .collect::<Vec<_>>()
-            .join(&GIT_JOIN_SEP.to_string())
+            .collect::<Vec<_>>();
+
+        let part_count = parts.len();
+        let total_size: usize = parts
+            .iter()
+            .enumerate()
+            .map(|(idx, &e)| (part_count - idx) * e.len())
+            .sum();
+
+        let mut str_builder = String::with_capacity(total_size);
+
+        for i in 0..part_count {
+            let intermediary = parts[..=i].join(DELIMITER);
+            str_builder.push_str(&intermediary);
+            str_builder.push(GIT_JOIN_SEP_CHAR);
+        }
+
+        str_builder
     } else {
         version.to_owned()
-    }
+    };
+
+    normalize_git_name_multi_level(rv)
 }
 
 #[cfg(test)]

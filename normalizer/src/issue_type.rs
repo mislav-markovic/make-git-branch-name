@@ -1,3 +1,6 @@
+use crate::normalize::normalize_git_name_to_one_level;
+
+
 pub struct IssueType(String);
 
 impl From<String> for IssueType {
@@ -24,7 +27,8 @@ impl IssueType {
 }
 
 pub(super) fn make_type_prefix(r#type: &IssueType) -> String {
-    r#type.issue_type().trim().to_lowercase()
+    let normalized_type_name = normalize_git_name_to_one_level(r#type.issue_type());
+    normalized_type_name.trim().to_lowercase()
 }
 
 #[cfg(test)]
