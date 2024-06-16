@@ -1,17 +1,42 @@
-pub enum IssueType {
-    Feature,
-    Defect,
+pub struct IssueHeading(String);
+
+impl From<String> for IssueHeading {
+    fn from(value: String) -> Self {
+        Self(value)
+    }
 }
 
-pub struct Issue {
-    heading: String,
-    r#type: IssueType,
+impl From<&str> for IssueHeading {
+    fn from(value: &str) -> Self {
+        Self(value.into())
+    }
 }
 
-impl Issue {
-    pub fn new(heading: impl Into<String>, r#type: IssueType) -> Self {
-        let heading: String = heading.into();
-        Self { heading, r#type }
+impl IssueHeading {
+    pub fn new(heading: impl Into<String>) -> Self {
+        let heading = heading.into();
+        Self(heading)
+    }
+}
+
+pub struct IssueType(String);
+
+impl From<String> for IssueType {
+    fn from(value: String) -> Self {
+        Self(value)
+    }
+}
+
+impl From<&str> for IssueType {
+    fn from(value: &str) -> Self {
+        Self(value.into())
+    }
+}
+
+impl IssueType {
+    pub fn new(r#type: impl Into<String>) -> Self {
+        let heading = r#type.into();
+        Self(heading)
     }
 }
 
@@ -29,17 +54,25 @@ impl From<&str> for ReleaseVersion {
     }
 }
 
-pub fn normalize_to_path(issue: Issue, for_version: Option<ReleaseVersion>) -> String {
-    let norm_heading = make_normalized_heading(&issue.heading);
-    let type_prefix = make_type_prefix(&issue.r#type);
-    let release_prefix = for_version
-        .map(|r| make_version_prefix(&r))
-        .unwrap_or_default();
+impl ReleaseVersion {
+    pub fn new(version: impl Into<String>) -> Self {
+        let heading = version.into();
+        Self(heading)
+    }
+}
+pub fn normalize_to_path(
+    issue: &IssueHeading,
+    for_type: Option<&IssueType>,
+    for_version: Option<&ReleaseVersion>,
+) -> String {
+    let norm_heading = make_normalized_heading(issue);
+    let type_prefix = for_type.map(make_type_prefix).unwrap_or_default();
+    let release_prefix = for_version.map(make_version_prefix).unwrap_or_default();
 
     combine_parts(&release_prefix, &type_prefix, &norm_heading)
 }
 
-fn make_normalized_heading(heading: &str) -> String {
+fn make_normalized_heading(heading: &IssueHeading) -> String {
     todo!()
 }
 
@@ -61,7 +94,7 @@ mod tests {
 
     #[test]
     fn defect_type_correctly_maps() {
-        let defect_type = IssueType::Defect;
+        let defect_type = IssueType::new("defect");
         let norm_type = make_type_prefix(&defect_type);
 
         assert_eq!("defect".to_string(), norm_type);
@@ -69,7 +102,7 @@ mod tests {
 
     #[test]
     fn feature_type_correctly_maps() {
-        let defect_type = IssueType::Feature;
+        let defect_type = IssueType::new("feature");
         let norm_type = make_type_prefix(&defect_type);
 
         assert_eq!("feature".to_string(), norm_type);
@@ -101,28 +134,28 @@ mod tests {
 
     #[test]
     fn printable_characters_sanitized() {
-        let input = "A:B?C[D\\E^F~G".to_string();
+        let input: IssueHeading = "A:B?C[D\\E^F~G".into();
         let expected = "A_B_C_D_E_F_G".to_string();
 
-        let actual = make_normalized_heading(input.as_str());
+        let actual = make_normalized_heading(&input);
         assert_eq!(expected, actual);
     }
 
     #[test]
     fn whitespaces_sanitized() {
-        let input = "A B\tC\r\nD\rE\nF".to_string();
+        let input: IssueHeading = "A B\tC\r\nD\rE\nF".into();
         let expected = "A_B_C_D_E_F".to_string();
 
-        let actual = make_normalized_heading(input.as_str());
+        let actual = make_normalized_heading(&input);
         assert_eq!(expected, actual);
     }
 
     #[test]
     fn multiple_consecutive_replaced_characters_replaced_with_single_character() {
-        let input = "A    B:?[  \\^  ~  C \r\n D\r   E    \n  F".to_string();
+        let input: IssueHeading = "A    B:?[  \\^  ~  C \r\n D\r   E    \n  F".into();
         let expected = "A_B_C_D_E_F".to_string();
 
-        let actual = make_normalized_heading(input.as_str());
+        let actual = make_normalized_heading(&input);
         assert_eq!(expected, actual);
     }
 
