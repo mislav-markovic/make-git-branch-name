@@ -8,5 +8,5 @@ use commands::Commands;
 #[command(about = "Tool for managing git branhces based on issue tracking generated headings", long_about = None)]
 pub(crate) struct Cli {
     #[command(subcommand)]
-    command: Commands,
+    pub command: Commands,
 }
