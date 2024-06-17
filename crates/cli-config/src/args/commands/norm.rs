@@ -1,7 +1,7 @@
 use clap::Args;
 
 #[derive(Debug, Args)]
-pub(crate) struct NormArgs {
+pub struct NormArgs {
     #[arg(short, long)]
     pub version: Option<String>,
     #[arg(short, long)]

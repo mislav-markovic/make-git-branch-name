@@ -1,15 +1,8 @@
 [package]
-name = "cli"
+name = "cli-config"
 version = "0.1.0"
 edition = "2021"
-
-[[bin]]
-name = "mkgb"
-path = "src/main.rs"
 
 [dependencies]
 # third pary dependencies
 clap = { version = "4.5.7", features = ["derive"] }
-
-# workspace dependencies
-normalizer = { path = "../normalizer" }

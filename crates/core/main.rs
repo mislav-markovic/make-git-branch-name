@@ -1,12 +1,9 @@
-mod args;
 mod exec;
 
-use args::Cli;
+use cli_config::{load_cli_config, CliConfig};
 use exec::dispatch_command;
 
-use clap::Parser;
-
 fn main() {
-    let args: Cli = Cli::parse();
+    let args: CliConfig = load_cli_config();
     dispatch_command(&args.command);
 }

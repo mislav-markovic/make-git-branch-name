@@ -1,4 +1,4 @@
 use clap::Args;
 
 #[derive(Debug, Args)]
-pub(crate) struct FindArgs {}
+pub struct FindArgs {}

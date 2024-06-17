@@ -1,6 +1,6 @@
-use crate::args::commands::norm::NormArgs;
+use cli_config::args::commands::norm::NormArgs;
 
-use normalizer::{
+use name_normalizer::{
     issue_heading::IssueHeading, issue_type::IssueType, make_branch_name,
     release_version::ReleaseVersion,
 };

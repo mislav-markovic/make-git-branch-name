@@ -1,6 +1,6 @@
 mod commands;
 
-use crate::args::commands::Commands;
+use cli_config::args::commands::Commands;
 
 pub fn dispatch_command(cmd: &Commands) {
     match cmd {

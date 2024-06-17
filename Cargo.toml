@@ -1,4 +1,19 @@
+[package]
+name = "make-git-branch"
+version = "0.1.1"
+edition = "2021"
+
+[[bin]]
+name = "mkgb"
+path = "crates/core/main.rs"
+
+[dependencies]
+# workspace dependencies
+name-normalizer = { path = "crates/name-normalizer" }
+cli-config = { path = "crates/cli-config" }
+file-config = { path = "crates/file-config" }
+
 [workspace]
 resolver = "2"
 
-members = ["cli", "normalizer"]
+members = ["crates/cli-config", "crates/file-config", "crates/name-normalizer"]
