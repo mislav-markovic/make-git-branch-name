@@ -26,7 +26,7 @@ impl ReleaseVersion {
 }
 
 pub(super) fn make_version_prefix(version: &ReleaseVersion) -> String {
-    const DELIMITER: &'static str = ".";
+    const DELIMITER: &str = ".";
 
     let version = version.version();
 

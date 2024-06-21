@@ -8,9 +8,9 @@ mod normalize;
 pub mod release_version;
 
 const GIT_JOIN_SEP_CHAR: char = '/';
-const GIT_JOIN_SEP_STR: &'static str = "/";
+const GIT_JOIN_SEP_STR: &str = "/";
 const GIT_REPLACE_CHAR: char = '_';
-const GIT_REPLACE_STR: &'static str = "_";
+const GIT_REPLACE_STR: &str = "_";
 
 pub fn make_branch_name(
     issue: &IssueHeading,

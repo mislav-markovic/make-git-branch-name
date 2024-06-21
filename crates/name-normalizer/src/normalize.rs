@@ -66,13 +66,13 @@ fn sanitize_component(s: &str) -> String {
     // so replacing single chars first can cause multi-chars to fail to replace
     // e.g. if name contains `@{` and we first replace single-chars `@` is lost and we leave `{` in
     // name which is undesirable
-    let s = replace_unallowed_multi_chars(&s);
+    let s = replace_unallowed_multi_chars(s);
     let s = replace_unallowed_single_chars(&s);
 
     let s = collaps_replace_chars(&s);
 
     let s = trim_git_start(&s);
-    let s = trim_git_end(&s);
+    let s = trim_git_end(s);
 
     s.to_string()
 }
