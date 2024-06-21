@@ -6,7 +6,7 @@ use name_normalizer::{
 };
 
 pub fn exec(args: &NormArgs) {
-    let (heading, issue_type, version) = map_args(&args);
+    let (heading, issue_type, version) = map_args(args);
 
     let result = make_branch_name(&heading, issue_type.as_ref(), version.as_ref());
 
@@ -17,26 +17,24 @@ fn map_args(norm_args: &NormArgs) -> (IssueHeading, Option<IssueType>, Option<Re
     let issue_type = norm_args
         .r#type
         .as_ref()
-        .map(|s| {
+        .and_then(|s| {
             if s.is_empty() {
                 None
             } else {
                 Some(IssueType::new(s))
             }
-        })
-        .flatten();
+        });
 
     let version = norm_args
         .version
         .as_ref()
-        .map(|s| {
+        .and_then(|s| {
             if s.is_empty() {
                 None
             } else {
                 Some(ReleaseVersion::new(s))
             }
-        })
-        .flatten();
+        });
 
     let strs = norm_args
         .heading
