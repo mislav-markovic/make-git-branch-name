@@ -1,6 +1,6 @@
 mod exec;
 
-use cli_config::{load_cli_config, CliConfig};
+use config_cli::{load_cli_config, CliConfig};
 use exec::dispatch_command;
 
 fn main() {

@@ -10,10 +10,11 @@ path = "crates/core/main.rs"
 [dependencies]
 # workspace dependencies
 name-normalizer = { path = "crates/name-normalizer" }
-cli-config = { path = "crates/cli-config" }
-file-config = { path = "crates/file-config" }
+config-core = { path = "crates/config-core" }
+config-cli = { path = "crates/config-cli" }
+config-file = { path = "crates/config-file" }
 
 [workspace]
 resolver = "2"
 
-members = ["crates/cli-config", "crates/file-config", "crates/name-normalizer"]
+members = [ "crates/config-core", "crates/config-cli",  "crates/config-file", "crates/name-normalizer"]

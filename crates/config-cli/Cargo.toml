@@ -1,8 +1,12 @@
 [package]
-name = "cli-config"
+name = "config-cli"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+
+#workspace dependencies
+config-core = { path = "../config-core" }
+
 # third pary dependencies
 clap = { version = "4.5.7", features = ["derive"] }

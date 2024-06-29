@@ -33,7 +33,7 @@ fn trim_git_end(mut s: &str) -> &str {
 }
 
 fn replace_unallowed_single_chars(s: &str) -> String {
-    const MATCHES: [char; 8] = ['^','@', '~', ':', '?', '*', '[', '\\'];
+    const MATCHES: [char; 8] = ['^', '@', '~', ':', '?', '*', '[', '\\'];
     let mut s = s.to_string();
     s.retain(|c| !c.is_ascii_control());
     s = s.replace(char::is_whitespace, GIT_REPLACE_STR);

@@ -92,21 +92,29 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4b82cf0babdbd58558212896d1a4272303a57bdb245c2bf1147185fb45640e70"
 
 [[package]]
-name = "cli-config"
-version = "0.1.0"
-dependencies = [
- "clap",
-]
-
-[[package]]
 name = "colorchoice"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0b6a852b24ab71dffc585bcb46eaf7959d175cb865a7152e35b348d1b2960422"
 
 [[package]]
-name = "file-config"
+name = "config-cli"
 version = "0.1.0"
+dependencies = [
+ "clap",
+ "config-core",
+]
+
+[[package]]
+name = "config-core"
+version = "0.1.0"
+
+[[package]]
+name = "config-file"
+version = "0.1.0"
+dependencies = [
+ "config-core",
+]
 
 [[package]]
 name = "heck"
@@ -124,8 +132,9 @@ checksum = "f8478577c03552c21db0e2724ffb8986a5ce7af88107e6be5d2ee6e158c12800"
 name = "make-git-branch"
 version = "0.1.1"
 dependencies = [
- "cli-config",
- "file-config",
+ "config-cli",
+ "config-core",
+ "config-file",
  "name-normalizer",
 ]
 

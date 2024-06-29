@@ -56,7 +56,6 @@ fn combine_parts(release: &str, r#type: &str, issue: &str) -> String {
 mod tests {
     use super::*;
 
-
     #[test]
     fn make_branch_name_without_release_string_works() {
         let release: Option<ReleaseVersion> = None;

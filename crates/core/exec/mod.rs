@@ -1,6 +1,6 @@
 mod commands;
 
-use cli_config::args::commands::Commands;
+use config_cli::args::commands::Commands;
 
 pub fn dispatch_command(cmd: &Commands) {
     match cmd {

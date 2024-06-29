@@ -1,6 +1,6 @@
 pub mod commands;
 
-use clap::{Parser};
+use clap::Parser;
 use commands::Commands;
 
 #[derive(Debug, Parser)] // requires `derive` feature

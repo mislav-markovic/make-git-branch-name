@@ -1,6 +1,5 @@
 use crate::normalize::normalize_git_name_to_one_level;
 
-
 pub struct IssueType(String);
 
 impl From<String> for IssueType {
